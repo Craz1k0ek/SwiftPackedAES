@@ -12,6 +12,8 @@ import CommonCrypto
 enum AESError: Error {
     /// The `IV` is missing.
     case missingIV
+    /// The provided `IV` is invalid.
+    case invalidIV
     /// The crypto operation failed.
     case cryptoOperationFailed
 }
@@ -82,6 +84,10 @@ class AESCryptor {
         // Validation
         if iv == nil {
             throw AESError.missingIV
+        }
+        
+        if iv.count != kCCBlockSizeAES128 {
+            throw AESError.invalidIV
         }
         
         // Prepare parameters
