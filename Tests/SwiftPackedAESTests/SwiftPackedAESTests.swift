@@ -59,6 +59,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let cipherText = try cryptor.encrypt(Data(plainText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(cipherText, Data(output))
+        
+        XCTAssertNoThrow(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
     func testAES128Decrypt() throws {
@@ -82,6 +88,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let plainText = try cryptor.decrypt(Data(cipherText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(plainText, Data(output))
+        
+        XCTAssertNoThrow(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
     func testAES192Encrypt() throws {
@@ -106,6 +118,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let cipherText = try cryptor.encrypt(Data(plainText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(cipherText, Data(output))
+        
+        XCTAssertNoThrow(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
     func testAES192Decrypt() throws {
@@ -130,6 +148,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let plainText = try cryptor.decrypt(Data(cipherText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(plainText, Data(output))
+        
+        XCTAssertNoThrow(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
     func testAES256Encrypt() throws {
@@ -155,6 +179,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let cipherText = try cryptor.encrypt(Data(plainText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(cipherText, Data(output))
+        
+        XCTAssertNoThrow(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.encrypt(Data(plainText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(plainText).encrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
     func testAES256Decrypt() throws {
@@ -180,6 +210,12 @@ final class SwiftPackedAESTests: XCTestCase {
         let plainText = try cryptor.decrypt(Data(cipherText), iv: AES.nullIV, options: .noPadding)
         
         XCTAssertEqual(plainText, Data(output))
+        
+        XCTAssertNoThrow(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try AES.decrypt(Data(cipherText), key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
+        
+        XCTAssertNoThrow(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding))
+        XCTAssertEqual(try Data(cipherText).decrypt(key: Data(key), iv: AES.nullIV, options: .noPadding), Data(output))
     }
     
 }
