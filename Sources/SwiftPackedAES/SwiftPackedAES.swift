@@ -40,6 +40,8 @@ public struct AES {
         case invalidKeySize(Int)
         /// An invalid key was provided.
         case invalidKey
+        /// An invalid plain text was provided.
+        case invalidPlainText
         /// An invalid IV size was used.
         case invalidIVSize(Int)
         /// The crypto operation could not be executed.
@@ -126,6 +128,132 @@ public struct AES {
     ///   - options: The options used for the operation (defaults to `.noPadding`).
     public func decrypt(_ cipherText: Data, iv: Data, options: Option = .noPadding) throws -> Data {
         try primitive(operation: .decrypt, input: cipherText, iv: iv, options: options)
+    }
+    
+    // MARK: - Static one shot functions
+    
+    /// Encrypt data using AES.
+    /// - Parameters:
+    ///   - input: The data to encrypt.
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func encrypt(_ input: Data, key: Data, iv: Data, options: Option = .noPadding) throws -> Data {
+        try AES(key: key).encrypt(input, iv: iv, options: options)
+    }
+    
+    /// Encrypt data using AES.
+    /// - Parameters:
+    ///   - input: The data to encrypt.
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func encrypt(_ input: Data, key: String, iv: Data, options: Option = .noPadding) throws -> Data {
+        try AES(key: key).encrypt(input, iv: iv, options: options)
+    }
+    
+    /// Encrypt data using AES.
+    /// - Parameters:
+    ///   - input: The data to encrypt.
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func encrypt(_ input: String, key: Data, iv: Data, options: Option = .noPadding) throws -> Data {
+        guard let plainText = input.data(using: .utf8) else { throw AES.Error.invalidPlainText }
+        return try AES(key: key).encrypt(plainText, iv: iv, options: options)
+    }
+    
+    /// Encrypt data using AES.
+    /// - Parameters:
+    ///   - input: The data to encrypt.
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func encrypt(_ input: String, key: String, iv: Data, options: Option = .noPadding) throws -> Data {
+        guard let plainText = input.data(using: .utf8) else { throw AES.Error.invalidPlainText }
+        return try AES(key: key).encrypt(plainText, iv: iv, options: options)
+    }
+    
+    /// Decrypt data using AES.
+    /// - Parameters:
+    ///   - cipherText: The cipher text to decrypt.
+    ///   - key: The key to use during decryption.
+    ///   - iv: The iv to use during decryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func decrypt(_ cipherText: Data, key: Data, iv: Data, options: Option = .noPadding) throws -> Data {
+        try AES(key: key).decrypt(cipherText, iv: iv, options: options)
+    }
+    
+    /// Decrypt data using AES.
+    /// - Parameters:
+    ///   - cipherText: The cipher text to decrypt.
+    ///   - key: The key to use during decryption.
+    ///   - iv: The iv to use during decryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    public static func decrypt(_ cipherText: Data, key: String, iv: Data, options: Option = .noPadding) throws -> Data {
+        try AES(key: key).decrypt(cipherText, iv: iv, options: options)
+    }
+    
+}
+
+public extension Data {
+    
+    /// Encrypt current data object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func encrypt(key: Data, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.encrypt(self, key: key, iv: iv, options: options)
+    }
+    
+    /// Encrypt current data object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func encrypt(key: String, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.encrypt(self, key: key, iv: iv, options: options)
+    }
+    
+    /// Decrypt current data object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during decryption.
+    ///   - iv: The iv to use during decryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func decrypt(key: Data, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.decrypt(self, key: key, iv: iv, options: options)
+    }
+    
+    /// Decrypt current data object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during decryption.
+    ///   - iv: The iv to use during decryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func decrypt(key: String, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.decrypt(self, key: key, iv: iv, options: options)
+    }
+    
+}
+
+public extension String {
+    
+    /// Encrypt current string object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func encrypt(key: Data, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.encrypt(self, key: key, iv: iv, options: options)
+    }
+    
+    /// Encrypt current string object using AES.
+    /// - Parameters:
+    ///   - key: The key to use during encryption.
+    ///   - iv: The iv to use during encryption.
+    ///   - options: The options used for the operation (defaults to `.noPadding`).
+    func encrypt(key: String, iv: Data, options: AES.Option = .noPadding) throws -> Data {
+        try AES.encrypt(self, key: key, iv: iv, options: options)
     }
     
 }

@@ -5,7 +5,9 @@ Simple AES encryption/decryption file
 
 ### Usage
 
-You can use the package as follows.
+For easy access to the single file, please go [here](https://github.com/Craz1k0ek/SwiftPackedAES/blob/master/Sources/SwiftPackedAES/SwiftPackedAES.swift).
+
+You can use the code as follows.
 
 ```swift
 do {
@@ -23,10 +25,11 @@ do {
 
 #### Block sizes
 
-This AES operation works based on the AES block size. If your message is not a multiple of a block size, than the crypto operation will fail.
+This AES operation works based on the AES block size. If your message is not a multiple of a block size, the crypto operation will fail.
 To prevent this from happening, use `PKCS#7` padding, which is included in the options.
 
 ```swift
+// "message" converted to data is not exactly a block size, padding is required
 try cryptor.encrypt(Data("message".utf8), iv: iv, options: .pkcs7Padding)
 ```
 
@@ -43,4 +46,33 @@ However, if you use a random key each time, it's fine to use an all zero IV, whi
 
 ```swift
 try cryptor.encrypt(plainText, iv: AES.nullIV, options: .pkcs7Padding)
+```
+
+#### One liners
+
+There are also one liners to quickly encrypt and decrypt. Some of these one liners also have an implementation on the `Data` type and `String` type through an extension.
+
+_One liners_
+```swift
+AES.encrypt("message", key: key, iv: iv, options: .pkcs7Padding)
+
+AES.decrypt(cipherText, key: key, iv: iv, options: .pkcs7Padding)
+```
+
+_Extensions_
+
+String example
+```swift
+let key = Data(repeating: 0, count: 16)
+let iv  = Data(repeating: 6, count: 16)
+
+"message".encrypt(key: key, iv: iv, options: .pkcs7Padding)
+```
+
+Data example
+```swift
+let key = Data(repeating: 0, count: 16)
+let iv  = Data(repeating: 8, count: 16)
+
+Data(repeating: 9, count: 8).encrypt(key: key, iv: iv, options: .pkcs7Padding)
 ```
