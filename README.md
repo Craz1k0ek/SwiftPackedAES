@@ -54,9 +54,9 @@ There are also one liners to quickly encrypt and decrypt. Some of these one line
 
 _One liners_
 ```swift
-AES.encrypt("message", key: key, iv: iv, options: .pkcs7Padding)
+try AES.encrypt("message", key: key, iv: iv, options: .pkcs7Padding)
 
-AES.decrypt(cipherText, key: key, iv: iv, options: .pkcs7Padding)
+try AES.decrypt(cipherText, key: key, iv: iv, options: .pkcs7Padding)
 ```
 
 _Extensions_
@@ -66,7 +66,7 @@ String example
 let key = Data(repeating: 0, count: 16)
 let iv  = Data(repeating: 6, count: 16)
 
-"message".encrypt(key: key, iv: iv, options: .pkcs7Padding)
+try "message".encrypt(key: key, iv: iv, options: .pkcs7Padding)
 ```
 
 Data example
@@ -74,5 +74,5 @@ Data example
 let key = Data(repeating: 0, count: 16)
 let iv  = Data(repeating: 8, count: 16)
 
-Data(repeating: 9, count: 8).encrypt(key: key, iv: iv, options: .pkcs7Padding)
+try Data(repeating: 9, count: 8).encrypt(key: key, iv: iv, options: .pkcs7Padding)
 ```
